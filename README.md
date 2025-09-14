@@ -37,14 +37,17 @@ Built with **Next.js (App Router)**, **TypeScript**, **Prisma**, and **PostgreSQ
 ```bash
 git clone [https://github.com/your-username/buyer-lead-intake.git](https://github.com/Iftekhar19/buyer-lead-intake.git)
 cd buyer-lead-intake
+```
 
 ### 2. Install dependencies
 ```bash
 npm install
+```
 
 ### 3. Setup environment variables
 ```bash
 DATABASE_URL="paset your postgresql url (local or neon db)"
+```
 
 
 
