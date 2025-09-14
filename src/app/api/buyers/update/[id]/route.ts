@@ -4,10 +4,7 @@ import { prisma } from "@/lib/db";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { createBuyerSchema } from "@/zod-schemas/schemas";
 import { NextResponse } from "next/server";
-
-// app/api/buyers/[id]/route.ts
 export async function PATCH(req: Request, { params }: any) {
- 
   const user = await getCurrentUser();
   try {
     if (!user) {
@@ -16,7 +13,7 @@ export async function PATCH(req: Request, { params }: any) {
         { status: 401 }
       );
     }
-    const ip = (await req.headers.get("x-forwarded-for"));
+    const ip = await req.headers.get("x-forwarded-for");
     const limit = checkRateLimit(ip || user.id);
     if (!limit.allowed) {
       return NextResponse.json(
@@ -28,7 +25,7 @@ export async function PATCH(req: Request, { params }: any) {
         { status: 429 }
       );
     }
-     const body = await req.json();
+    const body = await req.json();
     const parsedData = createBuyerSchema.safeParse(body);
     if (!parsedData.success) {
       return NextResponse.json(

@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { Search } from "lucide-react"; // optional, needs lucide-react
 
 interface Props {
   searchParams: Record<string, string | undefined>;
@@ -18,14 +19,12 @@ function sanitizeParams(params: Record<string, string | undefined>) {
 export default function Filters({ searchParams }: Props) {
   const router = useRouter();
 
-  // local states
   const [query, setQuery] = useState(searchParams.q || "");
   const [city, setCity] = useState(searchParams.city || "");
   const [propertyType, setPropertyType] = useState(searchParams.propertyType || "");
   const [status, setStatus] = useState(searchParams.status || "");
   const [timeline, setTimeline] = useState(searchParams.timeline || "");
 
-  // sync local state with props
   useEffect(() => {
     setQuery(searchParams.q || "");
     setCity(searchParams.city || "");
@@ -34,7 +33,7 @@ export default function Filters({ searchParams }: Props) {
     setTimeline(searchParams.timeline || "");
   }, [searchParams]);
 
-  // debounce search
+  // debounce for search input
   useEffect(() => {
     const t = setTimeout(() => {
       updateParams({ q: query, page: "1" });
@@ -69,76 +68,76 @@ export default function Filters({ searchParams }: Props) {
     if (key === "propertyType") setPropertyType(value);
     if (key === "status") setStatus(value);
     if (key === "timeline") setTimeline(value);
-     console.log(key,value)
     updateParams({ [key]: value, page: "1" });
   };
 
   return (
-    <div className="flex flex-wrap gap-3 items-center">
-      {/* Search */}
-      <input
-        type="text"
-        placeholder="Search buyers..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        className="border px-3 py-1 rounded"
-      />
+    <div className="bg-white shadow-sm rounded-xl p-4 w-full">
+      <div className="flex flex-col md:flex-row gap-3 md:items-center">
+        {/* Search box with icon */}
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <input
+            type="text"
+            placeholder="Search buyers..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
+          />
+        </div>
 
-      {/* City */}
-      <select
-        value={city}
-        onChange={(e) => handleDropdown("city", e.target.value)}
-        className="border px-2 py-1 rounded"
-      >
-        <option value="">All Cities</option>
-        <option value="Chandigarh">Chandigarh</option>
-        <option value="Mohali">Mohali</option>
-        <option value="Zirakpur">Zirakpur</option>
-        <option value="Panchkula">Panchkula</option>
-      </select>
+        {/* Dropdowns */}
+        <select
+          value={city}
+          onChange={(e) => handleDropdown("city", e.target.value)}
+          className="flex-1 min-w-[140px] px-3 py-2 border rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">All Cities</option>
+          <option value="Chandigarh">Chandigarh</option>
+          <option value="Mohali">Mohali</option>
+          <option value="Zirakpur">Zirakpur</option>
+          <option value="Panchkula">Panchkula</option>
+        </select>
 
-      {/* Property Type */}
-      <select
-        value={propertyType}
-        onChange={(e) => handleDropdown("propertyType", e.target.value)}
-        className="border px-2 py-1 rounded"
-      >
-        <option value="">All Property Types</option>
-        <option value="Apartment">Apartment</option>
-        <option value="Villa">Villa</option>
-        <option value="Plot">Plot</option>
-        <option value="Office">Office</option>
-        <option value="Retail">Retail</option>
-      </select>
+        <select
+          value={propertyType}
+          onChange={(e) => handleDropdown("propertyType", e.target.value)}
+          className="flex-1 min-w-[160px] px-3 py-2 border rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">All Property Types</option>
+          <option value="Apartment">Apartment</option>
+          <option value="Villa">Villa</option>
+          <option value="Plot">Plot</option>
+          <option value="Office">Office</option>
+          <option value="Retail">Retail</option>
+        </select>
 
-      {/* Status */}
-      <select
-        value={status}
-        onChange={(e) => handleDropdown("status", e.target.value)}
-        className="border px-2 py-1 rounded"
-      >
-        <option value="">All Status</option>
-        <option value="New">New</option>
-        <option value="Contacted">Contacted</option>
-        <option value="Visited">Visited</option>
-        <option value="Negotiation">Negotiation</option>
-        <option value="Converted">Converted</option>
-        <option value="Dropped">Dropped</option>
-      </select>
+        <select
+          value={status}
+          onChange={(e) => handleDropdown("status", e.target.value)}
+          className="flex-1 min-w-[150px] px-3 py-2 border rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">All Status</option>
+          <option value="New">New</option>
+          <option value="Contacted">Contacted</option>
+          <option value="Visited">Visited</option>
+          <option value="Negotiation">Negotiation</option>
+          <option value="Converted">Converted</option>
+          <option value="Dropped">Dropped</option>
+        </select>
 
-      {/* Timeline */}
-      <select
-        value={timeline}
-        onChange={(e) => handleDropdown("timeline", e.target.value)}
-        className="border px-2 py-1 rounded"
-      >
-        <option value="">All Timelines</option>
-        <option value="M0_3m">0–3 months</option>
-        <option value="M3_6m">3–6 months</option>
-        <option value="GT_6m">&gt;6 months</option>
-        <option value="Exploring">Exploring</option>
-      </select>
+        <select
+          value={timeline}
+          onChange={(e) => handleDropdown("timeline", e.target.value)}
+          className="flex-1 min-w-[160px] px-3 py-2 border rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">All Timelines</option>
+          <option value="M0_3m">0–3 months</option>
+          <option value="M3_6m">3–6 months</option>
+          <option value="GT_6m">&gt;6 months</option>
+          <option value="Exploring">Exploring</option>
+        </select>
+      </div>
     </div>
   );
 }
-

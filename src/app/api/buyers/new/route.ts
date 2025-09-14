@@ -5,21 +5,24 @@ import { getCurrentUser } from "@/lib/auth";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { BHK } from "@/generated/prisma";
 import { Timeline } from "@/generated/prisma";
-import { json } from "zod";
 
 export async function POST(req: Request) {
   const user = await getCurrentUser();
-  if (!user)return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    const ip =await req.headers.get("x-forwarded-for");
-    const limit=checkRateLimit(ip||user.id)
-    if(!limit.allowed)
-    {
-      return NextResponse.json(
-      { error: `Rate limit exceeded. Try again in ${Math.ceil(limit.retryAfter! / 1000)}s` },
+  if (!user)
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const ip = await req.headers.get("x-forwarded-for");
+  const limit = checkRateLimit(ip || user.id);
+  if (!limit.allowed) {
+    return NextResponse.json(
+      {
+        error: `Rate limit exceeded. Try again in ${Math.ceil(
+          limit.retryAfter! / 1000
+        )}s`,
+      },
       { status: 429 }
     );
-    }
-  
+  }
+
   const body = await req.json();
   const parse = createBuyerSchema.safeParse(body);
   if (!parse.success)
@@ -37,7 +40,12 @@ export async function POST(req: Request) {
         : (data.timeline as Timeline);
   }
   const buyer = await prisma.buyer.create({
-    data: { ...data, bhk: bhkEnum, timeline: timelineEnum?timelineEnum:"Exploring", ownerId: user.id },
+    data: {
+      ...data,
+      bhk: bhkEnum,
+      timeline: timelineEnum ? timelineEnum : "Exploring",
+      ownerId: user.id,
+    },
   });
   await prisma.buyerHistory.create({
     data: { buyerId: buyer.id, changedBy: user.id, diff: { created: data } },
