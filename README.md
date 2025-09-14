@@ -35,7 +35,7 @@ Built with **Next.js (App Router)**, **TypeScript**, **Prisma**, and **PostgreSQ
 
 ### 1. Clone the repo
 ```bash
-git clone [https://github.com/your-username/buyer-lead-intake.git](https://github.com/Iftekhar19/buyer-lead-intake.git)
+git clone https://github.com/Iftekhar19/buyer-lead-intake.git
 cd buyer-lead-intake
 ```
 
@@ -48,6 +48,18 @@ npm install
 ```bash
 DATABASE_URL="paset your postgresql url (local or neon db)"
 ```
+### 4. Setup database
+Run Prisma migrations to create the schema:
+```bash
+npx prisma migrate
+```
+### 5 run the project
+```bash
+npm run dev
+```
+
+
+
 
 
 
