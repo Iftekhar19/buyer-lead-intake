@@ -45,26 +45,23 @@ npm install
 ```
 
 ### 3. Setup environment variables
-```bash
-DATABASE_URL="paset your postgresql url (local or neon db)"
+
+Create a `.env` file in the project root and add your PostgreSQL connection string:
+
+```env
+DATABASE_URL="paste your PostgreSQL URL (local or Neon DB)"
 ```
+
 ### 4. Setup database
+
 Run Prisma migrations to create the schema:
+
 ```bash
 npx prisma migrate
 ```
-### 5 run the project
+
+### 5. Run the project
+
 ```bash
 npm run dev
 ```
-
-
-
-
-
-
-
-
-
-
-
