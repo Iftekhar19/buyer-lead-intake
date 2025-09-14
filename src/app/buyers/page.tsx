@@ -71,11 +71,11 @@ export default async function BuyersPage({ searchParams }: BuyersPageProps) {
               <tr>
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Phone</th>
-                <th className="px-4 py-3 hidden md:table-cell">City</th>
-                <th className="px-4 py-3 hidden md:table-cell">Property Type</th>
-                <th className="px-4 py-3 hidden md:table-cell">Budget</th>
-                <th className="px-4 py-3 hidden md:table-cell">Timeline</th>
-                <th className="px-4 py-3 hidden md:table-cell">Status</th>
+                <th className="px-4 py-3 table-cell">City</th>
+                <th className="px-4 py-3 table-cell">Property Type</th>
+                <th className="px-4 py-3 table-cell">Budget</th>
+                <th className="px-4 py-3 table-cell">Timeline</th>
+                <th className="px-4 py-3 table-cell">Status</th>
                 <th className="px-4 py-3">Updated</th>
                 <th className="px-4 py-3 text-center">Actions</th>
               </tr>
@@ -95,13 +95,13 @@ export default async function BuyersPage({ searchParams }: BuyersPageProps) {
                   >
                     <td className="px-4 py-3 font-medium text-gray-900">{b.fullName}</td>
                     <td className="px-4 py-3">{b.phone}</td>
-                    <td className="px-4 py-3 hidden md:table-cell">{b.city}</td>
-                    <td className="px-4 py-3 hidden md:table-cell">{b.propertyType}</td>
-                    <td className="px-4 py-3 hidden md:table-cell">
+                    <td className="px-4 py-3 table-cell">{b.city}</td>
+                    <td className="px-4 py-3 table-cell">{b.propertyType}</td>
+                    <td className="px-4 py-3 table-cell whitespace-nowrap">
                       ₹{b.budgetMin} – ₹{b.budgetMax}
                     </td>
-                    <td className="px-4 py-3 hidden md:table-cell">{b.timeline}</td>
-                    <td className="px-4 py-3 hidden md:table-cell">
+                    <td className="px-4 py-3 table-cell">{b.timeline}</td>
+                    <td className="px-4 py-3 table-cell">
                       <span
                         className={`px-2 py-1 rounded-full text-xs font-semibold ${
                           b.status === "Converted"
